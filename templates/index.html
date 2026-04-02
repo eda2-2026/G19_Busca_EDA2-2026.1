@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melhores Filmes IMDB</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+   <header>
+        <h1>Melhores Filmes do IMDB</h1>
+        <form method="GET" action="/">
+            <input type="text" name="busca" placeholder="Busque por um gênero" value="{{ busca }}">
+            <button type="submit">Buscar</button>
+        </form>
+        {% if busca %}
+            <p>Mostrando resultados para o gênero: <strong>{{ busca }}</strong></p>
+            <a href="/" class="btn-voltar">Limpar Busca</a>
+        {% endif %}
+    </header>
+
+    <main class="grid-filmes">
+        {% if filmes %}
+            {% for filme in filmes %}
+            <div class="cartao-filme">
+                <img src="{{ filme.poster }}" alt="Poster de {{ filme.titulo }}">
+                <div class="info">
+                    <h3>{{ filme.titulo }} ({{ filme.ano }})</h3>
+                    <p class="nota"> {{ filme.nota }} / 10</p>
+                    <p class="genero">{{ filme.genero_str }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>Nenhum filme encontrado para esse gênero.</p>
+        {% endif %}
+    </main> 
+</body>
+</html>
