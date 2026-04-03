@@ -10,13 +10,29 @@
    <header>
         <h1>Melhores Filmes do IMDB</h1>
         <form method="GET" action="/">
-            <input type="text" name="busca" placeholder="Busque por um gênero" value="{{ busca }}">
-            <button type="submit">Buscar</button>
+            <input type="text" name="nome" placeholder="Nome do filme" value="{{ busca_nome }}">
+
+            <select name="genero">
+                <option value="">Todos os Gêneros</option>
+                {% for g in generos %}
+                    <option value="{{ g }}" {% if busca_genero == g %}selected{% endif %}>
+                        {{ g.capitalize() }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="ano">
+                <option value="">Todos os Anos</option>
+                {% for a in anos %}
+                    <option value="{{ a }}" {% if busca_ano == a %}selected{% endif %}>
+                        {{ a }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Pesquisar</button>
         </form>
-        {% if busca %}
-            <p>Mostrando resultados para o gênero: <strong>{{ busca }}</strong></p>
-            <a href="/" class="btn-voltar">Limpar Busca</a>
-        {% endif %}
+
     </header>
 
     <main class="grid-filmes">
@@ -32,7 +48,7 @@
             </div>
             {% endfor %}
         {% else %}
-            <p>Nenhum filme encontrado para esse gênero.</p>
+            <p>Nenhum filme encontrado.</p>
         {% endif %}
     </main> 
 </body>
