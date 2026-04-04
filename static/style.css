@@ -1,0 +1,174 @@
+@charset "UTF-8";
+@font-face {
+        font-family: 'Cinema';
+        src: url(fonts/cinematografica.regular.ttf) format(truetype);
+}
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --titulo: 'Cinema', sans-serif;
+    --fonteb: "Roboto Condensed", sans-serif;
+    --cor1: #A81C00;
+    --cor2:#161616;
+    --cor3: #313131;
+    
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    font-size: 1em;
+    font-family: var(--fonteb);
+}
+
+body {
+    background-color: var(--cor2);
+}
+
+header {
+    background-color: var(--cor1);
+    padding: 5px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.486);
+}
+
+h1 {
+    font-family: var(--titulo);
+    color: white;
+    text-align: center;
+    font-size: 5em;
+    text-shadow: 1px 1px black;
+    letter-spacing: 1.5px;
+    padding: 2px;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0px;
+    margin-bottom: 20px;
+    margin-top: 15px;
+}
+
+input[type="text"], select, button {
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    height: 45px;
+}
+
+input[type="text"], select {
+    padding: 10px 15px;
+    background-color: var(--cor3);
+    color: white;
+    border-radius: 0;
+    border-right: 1px solid #4a4a4a; 
+}
+
+input[type="text"] {
+    width: 250px;
+    border-radius: 5px 0 0 5px; 
+}
+
+select {
+    width: 180px;
+    cursor: pointer;
+}
+
+select option {
+    background-color: var(--cor2);
+    color: white;
+    padding: 10px;
+}
+
+select[name="ano"] {
+    border-right: none;
+}
+
+#pesquisa {
+    padding: 10px 20px;
+    background-color: var(--cor2);
+    color: white;
+    border-radius: 0 5px 5px 0; 
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+#pesquisa:hover { 
+    background-color: #5C0F00;
+ }
+
+main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cartao-filme {
+    background-color: var(--cor3);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.cartao-filme:hover {
+    transform: scale(1.05);
+}
+
+.cartao-filme img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.info { 
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+}
+
+.info h3 {
+    color: white;
+    font-size: 1.1em; 
+    margin-bottom: 10px; 
+}
+    
+.nota { 
+    color: #f5c518; 
+    font-weight: bold; 
+    margin-bottom: 5px;
+    margin-top: auto;
+}
+
+.genero { 
+    font-size: 0.8em; 
+    color: #d1d0d0; 
+}
+
+#msg {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    grid-column: 1 / -1;
+}
+
+#botaomais {
+    background-color: transparent;
+    font-size: 1.3em;
+    color: white;
+}
+
+#botaomais:hover {
+    font-weight: bold;
+    cursor: pointer;
+}

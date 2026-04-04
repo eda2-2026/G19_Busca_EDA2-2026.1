@@ -70,12 +70,17 @@ anos_disponiveis = set()
 
 def carregar_dados():
     try:
-        with open('imdb_top_1000.csv', mode='r', encoding='utf-8') as file:
+        with open('data/imdb_top_1000.csv', mode='r', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             for row in reader:
+
+                url_poster = row['Poster_Link']
+                if "._V1_" in url_poster:
+                    url_poster = url_poster.split("._V1_")[0] + "._V1_UY500_.jpg"
+
                 filme = {
                     'titulo': row['Series_Title'],
-                    'poster': row['Poster_Link'],
+                    'poster': url_poster,
                     'ano': row['Released_Year'],
                     'nota': row['IMDB_Rating'],
                     'genero_str': row['Genre']
@@ -105,6 +110,11 @@ def index():
     query_genero = request.args.get('genero', '').strip().lower()
     query_ano = request.args.get('ano', '').strip()
 
+    try:
+        limite = int(request.args.get('limite', 25))
+    except ValueError:
+        limite = 25
+
     if query_genero:
         resultados = filmes_por_genero.buscar(query_genero)
     else:
@@ -115,12 +125,9 @@ def index():
 
     if query_ano:
         resultados = busca_seq_ano(resultados, query_ano)
-    
-    if not query_nome and not query_genero and not query_ano:
-        resultados_exibicao = resultados
 
-    else:
-        resultados_exibicao = resultados
+    resultados_exibicao = resultados[:limite]
+    tem_mais = len(resultados) > limite
 
     return render_template('index.html',
                            filmes=resultados_exibicao, 
@@ -128,7 +135,9 @@ def index():
                            anos=lista_anos,
                            busca_nome=query_nome,
                            busca_genero=query_genero,
-                           busca_ano=query_ano)
+                           busca_ano=query_ano,
+                           limite=limite,
+                           tem_mais=tem_mais)
 
 if __name__ == '__main__':
     app.run(debug=True)
