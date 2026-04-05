@@ -3,11 +3,12 @@ import csv
 
 app = Flask(__name__)
 
+# cada nó guarda a chave e uma lista de filmes
 class No:
     def __init__(self, chave, valor_filme):
         self.chave = chave
-        self.valores = [valor_filme] 
-        self.proximo = None
+        self.valores = [valor_filme] # lista de filmes da chave
+        self.proximo = None # ponteiro para o próximo nó
 
 class TabelaHash:
     def __init__(self, tamanho=127):
@@ -17,23 +18,25 @@ class TabelaHash:
     def _funcao_hash(self, chave):
         soma = 0
         for caractere in chave:
-            soma += ord(caractere)
-        return soma % self.tamanho
+            soma += ord(caractere) # transforma string em numero
+        return soma % self.tamanho # garante que o indice esteja dentro do array
     
     def inserir(self, chave, valor_filme):
         indice = self._funcao_hash(chave)
 
+        # se o indice estiver vazio, cria o primeiro nó
         if self.tabela[indice] is None:
             self.tabela[indice] = No(chave, valor_filme)
         else:
+            # se tiver colisão, percorremos a lista encadeada
             atual = self.tabela[indice]
             while True:
                 if atual.chave == chave:
-                    atual.valores.append(valor_filme)
+                    atual.valores.append(valor_filme) # mesmo gênero
                     break
 
                 if atual.proximo is None:
-                    atual.proximo = No(chave, valor_filme)
+                    atual.proximo = No(chave, valor_filme) # novo gênero
                     break
                 atual = atual.proximo
             
@@ -50,9 +53,9 @@ class TabelaHash:
     
 def busca_seq_nome(lista_filmes, pedaco_nome):
     resultados = []
-    pedaco_nome = pedaco_nome.lower()
-    for filme in lista_filmes:
-        if pedaco_nome in filme['titulo'].lower():
+    pedaco_nome = pedaco_nome.lower() 
+    for filme in lista_filmes: # percorre toda a lista
+        if pedaco_nome in filme['titulo'].lower():  
             resultados.append(filme)
     return resultados
 
@@ -111,9 +114,9 @@ def index():
     query_ano = request.args.get('ano', '').strip()
 
     try:
-        limite = int(request.args.get('limite', 25))
+        limite = int(request.args.get('limite', 20))
     except ValueError:
-        limite = 25
+        limite = 20
 
     if query_genero:
         resultados = filmes_por_genero.buscar(query_genero)
